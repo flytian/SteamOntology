@@ -32,4 +32,6 @@ class SteamOntologiaItem(scrapy.Item):
 
     produtoras = scrapy.Field()
 
+    data_lancamento = scrapy.Field()
+
     pass

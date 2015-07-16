@@ -49,42 +49,49 @@ class SteamOntologia(scrapy.Spider):
         item['produtoras'] = []
         item['editoras'] = []
         avaliacao = ""
+        free = 0
         #NOME DO JOGO
         for res in response.xpath("//div[@class='apphub_AppName']").xpath("text()").extract():
             item['nome'] = res
         #CATEGORIAS DO JOGO
         for res in response.xpath("//a[@class='app_tag']").xpath("text()").extract():
+            if res == 'Free to Play':
+                free=1
             item['categorias'].append(res.strip())
         #LINK PARA STEAM
         for res in response.xpath("//link[@rel='canonical']").xpath("@href").extract():
             item['link'] = res
-        #PRECO
-        for res in response.xpath("//div[@class='game_purchase_price price'][1]").xpath("text()").extract():
-            preco = re.findall("\d+,?\d+", res)
-            if preco:
-                item['preco'] = preco[0]
-        #PRECO COM PROMOCAO
-        for res in response.xpath("//div[@class='discount_final_price']").xpath("text()").extract():
-            preco_com_desconto = re.findall("\d+,?\d+", res)
-            if preco_com_desconto:
-                item['preco_com_desconto'] = preco_com_desconto[0]
-        #PRECO SEM PROMOCAO
-        for res in response.xpath("//div[@class='discount_original_price']").xpath("text()").extract():
-            preco_sem_desconto = re.findall("\d+,?\d+", res)
-            if preco_sem_desconto:
-                item['preco_sem_desconto'] = preco_sem_desconto[0]
-        #PERCENTAGEM DE DESCONTO
-        for res in response.xpath("//div[@class='discount_pct']").xpath("text()").extract():
-            desconto = re.findall("\d+", res)
-            if desconto:
-                item['desconto'] = desconto[0]
+        if free == 0:
+            #PRECO
+            for res in response.xpath("//*[@id='game_area_purchase']/div[1]/div/div[2]/div/div[1]").extract():
+                preco = re.findall("\d+,?\d+", res)
+                if preco:
+                    item['preco'] = preco[0]
+
+            #PRECO COM PROMOCAO
+            for res in response.xpath("//*[@id='game_area_purchase']/div[1]/div/div[2]/div/div[1]/div[2]/div[2]/text()").extract():
+                preco_com_desconto = re.findall("\d+,?\d+", res)
+                if preco_com_desconto:
+                    item['preco_com_desconto'] = preco_com_desconto[0]
+                    item.pop('preco')
+            #PRECO SEM PROMOCAO
+            for res in response.xpath("//*[@id='game_area_purchase']/div[1]/div/div[2]/div/div[1]/div[2]/div[1]/text()").extract():
+                preco_sem_desconto = re.findall("\d+,?\d+", res)
+                if preco_sem_desconto:
+                    item['preco_sem_desconto'] = preco_sem_desconto[0]
+            #PERCENTAGEM DE DESCONTO
+            for res in response.xpath("//*[@id='game_area_purchase']/div[1]/div/div[2]/div/div[1]/div[1]/text()").extract():
+                desconto = re.findall("\d+", res)
+                if desconto:
+                    item['desconto'] = desconto[0]
+
         #PEG, CLASSIFICACOES
         for res in response.xpath("//p[@id='descriptorText']").xpath("text() | br").extract():
             if res!="<br>" and len(res)< 20 and '-'not in res:
                 item['classificacoes'].append(res.strip())
         #AVALIACAO METASCORE 0-100
-        for res in response.xpath("//span[@class='ms_slash']").xpath("preceding::span[1]/text()").extract():
-            avaliacao += res.strip()
+        for res in response.xpath("//*[@id='game_area_metascore']/span[1]/text()").extract():
+            item['avaliacao'] = res
         #COMENTARIOS POSITIVOS
         for res in response.xpath("//span[@class='user_reviews_count' and contains(preceding::span[1]/text(),'Negative')]").xpath("text()").extract():
             res = res.replace("(", '')
@@ -101,19 +108,20 @@ class SteamOntologia(scrapy.Spider):
         for res in response.xpath("//a[contains(preceding::b[1]/text(),'Publisher:')]").xpath("text()").extract():
             editoras = res.split(",")
             for editora in editoras:
-               item['editoras'] = editora.strip().replace("}{","H")
+               item['editoras'] = editora.strip()
         #PRODUTORA
         for res in response.xpath("//a[contains(preceding::b[1]/text(),'Developer:')]").xpath("text()").extract():
             produtoras = res.split(",")
             for produtora in produtoras:
-               item['produtoras'] = produtora.strip().replace("}{","H")
+               item['produtoras'] = produtora.strip()
+        #DATA DE LANCAMENTO
+        for res in response.xpath("//*[@id='game_highlights']/div[2]/div/div[4]/span/text()").extract():
+            item['data_lancamento'] = res
+
         #LINGUAS
         for res in response.xpath("//td[@class='ellipsis']").xpath("text()").extract():
             if('#' not in res):
                 item['linguas'].append(res.strip())
-
-        if avaliacao != "":
-            item['avaliacao'] = avaliacao
         if item.get('nome'):
             yield item
 

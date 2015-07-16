@@ -62,7 +62,7 @@ LOG_LEVEL = 'INFO'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'SteamOntologia.pipelines.SomePipeline': 300,
+#    'SteamOntologia.pipelines.SteamOntologiaPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

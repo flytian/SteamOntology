@@ -256,67 +256,63 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
             <xsl:for-each select="//categorias/value[not(.=preceding::value)]">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;Categoria"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
                 </owl:NamedIndividual>
             </xsl:for-each>
             
-            <xsl:for-each select="//editora[not(.=preceding::value)]">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+            <xsl:for-each select="//editoras[not(.=preceding::editoras)]">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;Editora"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
                 </owl:NamedIndividual>
             </xsl:for-each>
             
-            <xsl:for-each select="//produtora[not(.=preceding::value)]">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+            <xsl:for-each select="//produtoras[not(.=preceding::produtoras)]">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;Produtora"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
                 </owl:NamedIndividual>
             </xsl:for-each>
             
             <xsl:for-each select="//linguas/value[not(.=preceding::value)]">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;Língua"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
                 </owl:NamedIndividual>
             </xsl:for-each>
             
             <xsl:for-each select="//classificacoes/value[not(.=preceding::value)]">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;Classificação"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
                 </owl:NamedIndividual>
             </xsl:for-each>
             
             <xsl:for-each select="//item">
-                <owl:NamedIndividual rdf:about="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}">
+                <owl:NamedIndividual rdf:about="&steam-ontologia;{translate(nome, translate(nome,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}">
                     <rdf:type rdf:resource="&steam-ontologia;VideoJogo"/>
                     <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="nome"></xsl:value-of></TemNome>
                     
                     <xsl:for-each select="./categorias/value">
-                        <TemCategoria rdf:resource="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}"/>
+                        <TemCategoria rdf:resource="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}"/>
                     </xsl:for-each>
                     
                     <xsl:for-each select="./linguas/value">
-                        <TemLíngua rdf:resource="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}"/>
+                        <TemLíngua rdf:resource="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}"/>
                     </xsl:for-each>
                     
                     <xsl:for-each select="./classificacoes/value">
-                        <TemClassificação rdf:resource="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}"/>
+                        <TemClassificação rdf:resource="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}"/>
                     </xsl:for-each>
                     
                     <xsl:for-each select="./editora">
-                        <TemEditora rdf:resource="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}"/>
+                        <TemEditora rdf:resource="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}"/>
                     </xsl:for-each>
                     
                     <xsl:for-each select="./produtora">
-                        <TemProdutora rdf:resource="&steam-ontologia;{replace(replace(replace(replace(replace(replace(replace(.,' ',''),',',''),'/',''),'\n',''),'-',''),'`',''),':','')}"/>
-                    </xsl:for-each>
-                    
-                    <xsl:for-each select="./nome">
-                        <TemNome rdf:datatype="&xsd;string"><xsl:value-of select="."></xsl:value-of></TemNome>
+                        <TemProdutora rdf:resource="&steam-ontologia;{translate(., translate(.,'ABCDEFGHIJLMNOPQRSTUVXYZabcdefghijlmnopqrstuvxzyKk1234567890wW',''), '')}"/>
                     </xsl:for-each>
                     
                     <xsl:for-each select="./preco_com_desconto">
